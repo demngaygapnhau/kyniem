@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Chuyện tình mình 💖</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary: #ff7eb3; /* Hồng đậm */
+      --primary-hover: #ff5c9d;
+      --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); 
+      --glass: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --text-main: #5d4e6d;
+      --text-light: #9085a0;
+      --shadow: 0 8px 32px 0 rgba(148, 156, 189, 0.25);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif; /* Font tròn trịa */
+      color: var(--text-main);
+      background: linear-gradient(to top, #fad0c4 0%, #ffd1ff 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-size: 15px;
+    }
+
+    /* --- Hiệu ứng Trái tim bay (Background) --- */
+    .hearts-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      overflow: hidden; z-index: -1; pointer-events: none;
+    }
+    .hearts-bg li {
+      position: absolute; display: block; list-style: none;
+      width: 20px; height: 20px; background: rgba(255, 255, 255, 0.4);
+      animation: animate 25s linear infinite;
+      bottom: -150px; border-radius: 50%;
+      clip-path: path("M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z");
+      transform: scale(0.5);
+    }
+    /* Tạo nhiều trái tim với kích thước/vị trí ngẫu nhiên */
+    .hearts-bg li:nth-child(1){ left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .hearts-bg li:nth-child(2){ left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+    .hearts-bg li:nth-child(3){ left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+    .hearts-bg li:nth-child(4){ left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+    .hearts-bg li:nth-child(5){ left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+    .hearts-bg li:nth-child(6){ left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+    .hearts-bg li:nth-child(7){ left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+    .hearts-bg li:nth-child(8){ left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+    .hearts-bg li:nth-child(9){ left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
+    .hearts-bg li:nth-child(10){ left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
+
+    @keyframes animate {
+      0%{ transform: translateY(0) rotate(0deg) scale(0.8); opacity: 1; border-radius: 0; }
+      100%{ transform: translateY(-1000px) rotate(720deg) scale(1.2); opacity: 0; border-radius: 50%; }
+    }
+
+    /* --- Layout chính --- */
+    .wrap { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+    /* Header */
+    header { 
+      text-align: center; margin-bottom: 30px; 
+      background: rgba(255,255,255,0.4); padding: 20px; 
+      border-radius: 30px; box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+    }
+    
+    .brand { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .logo { 
+      font-size: 40px; 
+      animation: beat 1.5s infinite; 
+      text-shadow: 0 5px 15px rgba(255, 126, 179, 0.4);
+    }
+    @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+    h1 { 
+      margin: 0; 
+      font-family: 'Dancing Script', cursive; 
+      font-size: 2.8rem; 
+      background: -webkit-linear-gradient(#ff758c, #ff7eb3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .sub { color: var(--text-light); margin-top: 5px; font-weight: 600; }
+
+    /* Stats Pill */
+    .stats-row {
+      display: flex; gap: 12px; justify-content: center; margin-top: 15px; flex-wrap: wrap;
+    }
+    .pill {
+      background: #fff; padding: 8px 16px; border-radius: 50px;
+      font-size: 13px; color: var(--primary); font-weight: 700;
+      box-shadow: 0 4px 10px rgba(255, 126, 179, 0.15);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* --- Glass Cards --- */
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+    .cardHead {
+      padding: 15px 20px; border-bottom: 1px solid rgba(0,0,0,0.05);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .cardHead h2 { margin: 0; font-size: 18px; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+    .cardBody { padding: 20px; }
+
+    /* Form Alignment */
+    .form-group { margin-bottom: 15px; }
+    label { 
+      display: block; margin-bottom: 6px; 
+      font-weight: 700; color: #7a6b8a; font-size: 13px; margin-left: 4px;
+    }
+    input, textarea, select {
+      width: 100%; padding: 12px 16px;
+      border: 2px solid #eee; border-radius: 14px;
+      font-family: 'Quicksand', sans-serif; font-size: 16px;
+      color: #333; background: #fff;
+      transition: all 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none; border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 126, 179, 0.15);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+
+    /* Grid Layout for Form */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    @media(max-width: 600px){ .grid-2 { grid-template-columns: 1fr; } }
+
+    /* Buttons */
+    .btn {
+      border: none; padding: 12px 20px; border-radius: 12px;
+      font-weight: 700; font-family: 'Quicksand', sans-serif;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+      transition: transform 0.1s, box-shadow 0.2s;
+      font-size: 14px;
+    }
+    .btn:active { transform: scale(0.96); }
+    
+    .btn.primary {
+      background: linear-gradient(45deg, #ff9a9e 0%, #ff7eb3 100%);
+      color: white;
+      box-shadow: 0 6px 20px rgba(255, 126, 179, 0.4);
+      width: 100%; /* Mobile friendly */
+    }
+    @media(min-width: 600px){ .btn.primary { width: auto; } }
+
+    .btn.secondary { background: #fff; color: #666; border: 1px solid #ddd; }
+    .btn.danger { background: #fff0f0; color: #ff5d5d; border: 1px solid #ffdede; }
+
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+
+    /* List Items */
+    .timeline { display: flex; flex-direction: column; gap: 15px; }
+    .item {
+      display: flex; gap: 15px; padding: 15px;
+      background: #fff; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.6);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      align-items: center;
+    }
+    .item:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(148, 156, 189, 0.2); border-color: var(--primary); }
+    
+    .thumb { 
+      width: 60px; height: 60px; border-radius: 14px; overflow: hidden; flex-shrink: 0;
+      background: #f0f2f5; display: grid; place-items: center; font-size: 24px;
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .meta { flex: 1; }
+    .titleLine { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .item-title { font-weight: 700; font-size: 16px; color: #333; }
+    .item-date { font-size: 12px; color: #999; margin-top: 2px; }
+    .item-desc { font-size: 13px; color: #666; margin-top: 4px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .tag { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: #eee; white-space: nowrap; font-weight: 600; }
+    .tag.moment { background: #e3f2fd; color: #2196f3; }
+    .tag.anniv { background: #e8f5e9; color: #4caf50; }
+    .tag.trip { background: #fff3e0; color: #ff9800; }
+    .tag.gift { background: #fce4ec; color: #e91e63; }
+
+    /* Dialog */
+    dialog {
+      border: none; border-radius: 24px; padding: 0;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      width: min(500px, 90vw);
+      background: #fff;
+    }
+    dialog::backdrop { background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); }
+    .dlgHead { padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .dlgHead h3 { margin: 0; font-size: 16px; color: var(--primary); text-transform: uppercase; }
+    .heroImg { width: 100%; height: 250px; background: #eee; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .heroImg img { width: 100%; height: 100%; object-fit: cover; }
+    .heroImg .emoji { font-size: 60px; }
+    .detailContent { padding: 20px; }
+    .detailRow { margin-bottom: 12px; }
+    .detailRow .k { font-size: 12px; color: #999; text-transform: uppercase; font-weight: 700; }
+    .detailRow .v { font-size: 15px; color: #333; margin-top: 2px; }
+
+    /* Empty state */
+    .empty { text-align: center; padding: 40px 20px; color: #999; }
+    .empty-icon { font-size: 50px; margin-bottom: 10px; display: block; opacity: 0.5; }
+
+    /* Toolbar inputs */
+    .toolbar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+    .toolbar input, .toolbar select { font-size: 14px; padding: 8px 12px; }
+    .search-box { flex: 1; min-width: 200px; }
+    /* --- Nút nhạc --- */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px; /* Góc trái dưới */
+  width: 50px; height: 50px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+/* Khi nhạc đang phát thì xoay tròn và đổi màu */
+.music-btn.playing {
+  background: var(--primary);
+  color: #fff;
+  animation: spinMusic 3s linear infinite;
+}
+
+@keyframes spinMusic {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+  </style>
+</head>
+<body>
+  <div class="music-btn" id="btnMusic" title="Bật/Tắt nhạc">🎵</div>
+
+<audio id="myAudio" loop>
+  <source src="./assets//HOÀNG TÔN - YÊU EM RẤT NHIỀU (Lyrics Video).mp3" type="audio/mpeg">
+</audio>
+  <ul class="hearts-bg">
+    <li></li><li></li><li></li><li></li><li></li>
+    <li></li><li></li><li></li><li></li><li></li>
+  </ul>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">💖</div>
+        <div>
+          <h1>Chuyện tình mình</h1>
+          <div class="sub" id="headerSub">Lưu giữ từng khoảnh khắc ngọt ngào ✨</div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="pill">📌 Kỷ niệm: <span id="countAll">0</span></div>
+        <div class="pill">⏳ Bên nhau: <span id="loveDays">...</span></div>
+        <button class="btn secondary" id="btnSettings" style="padding: 6px 12px; font-size:12px;">⚙️ Cài đặt</button>
+      </div>
+    </header>
+
+    <div class="grid-main">
+      <section class="card">
+        <div class="cardHead">
+          <h2>💌 Thêm kỷ niệm mới</h2>
+          <span style="font-size:12px; color:#999;" id="editHint"></span>
+        </div>
+        <div class="cardBody">
+          <div class="form-group">
+            <label>Tên kỷ niệm</label>
+            <input id="title" placeholder="Ví dụ: Lần đầu đi Đà Lạt..." maxlength="80" />
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Ngày diễn ra</label>
+              <input id="date" type="date" />
+            </div>
+            <div class="form-group">
+              <label>Phân loại</label>
+              <select id="type">
+                <option value="moment">✨ Khoảnh khắc</option>
+                <option value="anniv">🎉 Ngày kỷ niệm</option>
+                <option value="trip">🧳 Chuyến đi</option>
+                <option value="gift">🎁 Món quà</option>
+                <option value="other">📝 Khác</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Lời nhắn / Mô tả</label>
+            <textarea id="desc" placeholder="Hôm đó anh/em cảm thấy thế nào?"></textarea>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label>Địa điểm</label>
+              <input id="place" placeholder="Ở đâu thế?" />
+            </div>
+            <div class="form-group">
+              <label>Ảnh (nếu có)</label>
+              <input id="photo" type="file" accept="image/*" style="padding: 9px;" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" id="btnSave">💖 Lưu lại ngay</button>
+            <button class="btn secondary" id="btnClear">Làm mới</button>
+            <button class="btn danger" id="btnDelete" disabled style="display:none">Xoá</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="toolbar">
+          <input id="q" class="search-box" placeholder="🔎 Tìm kiếm ký ức..." />
+          <select id="filterType" style="width: auto;">
+            <option value="all">Tất cả</option>
+            <option value="moment">Khoảnh khắc</option>
+            <option value="anniv">Kỷ niệm</option>
+            <option value="trip">Du lịch</option>
+            <option value="gift">Quà tặng</option>
+          </select>
+        </div>
+
+        <div class="timeline" id="list">
+          </div>
+      </section>
+    </div>
+  </div>
+
+  <dialog id="dlg">
+    <div class="heroImg" id="dlgImg"></div>
+    <div class="dlgHead">
+      <h3>Chi tiết</h3>
+      <button class="btn secondary" id="btnClose" style="padding:4px 10px;">✕</button>
+    </div>
+    <div class="detailContent">
+      <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:15px;">
+        <h2 id="dlgTitle" style="margin:0; color:var(--primary); font-size:22px;"></h2>
+        <span id="dlgType" class="tag moment"></span>
+      </div>
+      
+      <div class="grid-2">
+        <div class="detailRow">
+          <div class="k">Thời gian</div>
+          <div class="v" id="dlgDate"></div>
+        </div>
+        <div class="detailRow">
+          <div class="k">Đếm ngược/xuôi</div>
+          <div class="v" id="dlgSince"></div>
+        </div>
+      </div>
+      
+      <div class="detailRow">
+        <div class="k">Địa điểm</div>
+        <div class="v" id="dlgPlace"></div>
+      </div>
+      
+      <div class="detailRow">
+        <div class="k">Nội dung</div>
+        <div class="v" id="dlgDesc" style="white-space:pre-wrap; line-height:1.6;"></div>
+      </div>
+
+      <div class="actions" style="margin-top:20px; border-top:1px solid #eee; padding-top:15px;">
+        <button class="btn primary" id="btnEdit">✏️ Sửa nội dung này</button>
+        <button class="btn danger" id="btnDeleteDlg">🗑️ Xoá</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="dlgSettings" style="width: 350px;">
+    <div class="dlgHead">
+      <h3>Cài đặt chung</h3>
+      <button class="btn secondary" id="btnCloseSettings">✕</button>
+    </div>
+    <div class="cardBody">
+      <div class="form-group">
+        <label>Tên cặp đôi</label>
+        <input id="coupleName" placeholder="Ví dụ: Vợ chồng son" />
+      </div>
+      <div class="form-group">
+        <label>Ngày bắt đầu yêu</label>
+        <input id="startLove" type="date" />
+      </div>
+      <button class="btn primary" id="btnSaveSettings" style="width:100%">Lưu cài đặt</button>
+      <div style="margin-top:15px; text-align:center;">
+        <button class="btn danger" id="btnReset" style="font-size:12px; padding:6px 12px;">Reset toàn bộ dữ liệu</button>
+      </div>
+    </div>
+  </dialog>
+
+  <input id="importFile" type="file" accept="application/json" hidden />
+
+  <script type="module">
+    // --- 1. CẤU HÌNH FIREBASE ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    // ⚠️ DÁN CONFIG CỦA BẠN VÀO ĐÂY (Thay thế đoạn bên dưới)
+    const firebaseConfig = {
+  apiKey: "AIzaSyATSm-bKSIwD06Jx1au3NE4M6sFgI4JGfY",
+  authDomain: "love-memories-4c8e7.firebaseapp.com",
+  databaseURL: "https://love-memories-4c8e7-default-rtdb.firebaseio.com",
+  projectId: "love-memories-4c8e7",
+  storageBucket: "love-memories-4c8e7.firebasestorage.app",
+  messagingSenderId: "945710208369",
+  appId: "1:945710208369:web:3a57305828775efeb3d2d0"
+};
+    // ⚠️ KẾT THÚC PHẦN DÁN CONFIG
+
+    // Khởi tạo Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // --- 2. CÁC BIẾN & ELEMENT (Giữ nguyên) ---
+    const el = (id) => document.getElementById(id);
+    const $title = el("title"), $date = el("date"), $type = el("type");
+    const $desc = el("desc"), $place = el("place"), $photo = el("photo");
+    const $list = el("list"), $q = el("q"), $filterType = el("filterType");
+    const $btnSave = el("btnSave"), $btnClear = el("btnClear"), $btnDelete = el("btnDelete");
+    const $countAll = el("countAll"), $loveDays = el("loveDays"), $editHint = el("editHint");
+    
+    const dlg = el("dlg"), btnClose = el("btnClose"), btnEdit = el("btnEdit"), btnDeleteDlg = el("btnDeleteDlg");
+    const dlgSettings = el("dlgSettings"), btnSettings = el("btnSettings");
+    const btnCloseSettings = el("btnCloseSettings"), btnSaveSettings = el("btnSaveSettings");
+    const $startLove = el("startLove"), $coupleName = el("coupleName");
+    const btnReset = el("btnReset");
+
+    // Các nút Export/Import sẽ không cần thiết nữa vì dữ liệu đã online
+    // Nhưng ta cứ để đó hoặc ẩn đi tuỳ bạn.
+
+    let items = [];
+    let settings = {};
+    let selectedId = null;
+    let selectedPhotoDataUrl = null;
+
+    // --- 3. KẾT NỐI DỮ LIỆU ONLINE (Thay thế LocalStorage) ---
+    
+    // Lắng nghe dữ liệu thay đổi từ Firebase (Realtime)
+    // Khi bạn hoặc người ấy lưu, hàm này tự chạy và cập nhật màn hình
+    const dbRefItems = ref(db, 'memories/items');
+    const dbRefSettings = ref(db, 'memories/settings');
+
+    onValue(dbRefItems, (snapshot) => {
+      const data = snapshot.val();
+      items = data || []; // Nếu không có dữ liệu thì là mảng rỗng
+      render();
+    });
+
+    onValue(dbRefSettings, (snapshot) => {
+      const data = snapshot.val();
+      settings = data || {};
+      renderHeader();
+    });
+
+    // Hàm lưu lên mây
+    function saveItemsToCloud(){
+      set(dbRefItems, items)
+        .then(() => console.log("Đã lưu items lên mây!"))
+        .catch((e) => alert("Lỗi lưu dữ liệu: " + e));
+    }
+
+    function saveSettingsToCloud(){
+      set(dbRefSettings, settings)
+        .then(() => console.log("Đã lưu settings lên mây!"))
+        .catch((e) => alert("Lỗi lưu cài đặt: " + e));
+    }
+
+    // --- 4. CÁC HÀM XỬ LÝ ẢNH & LOGIC (Giữ nguyên logic, đổi chỗ lưu) ---
+    
+    function uid(){ return "m_" + Date.now().toString(36) + Math.random().toString(36).substr(2); }
+    function safeStr(x){ return (x ?? "").toString(); }
+    function parseDateISO(iso){ if(!iso) return null; const [y,m,d]=iso.split("-"); return new Date(y,m-1,d); }
+    function formatDate(iso){ 
+      if(!iso) return ""; 
+      const [y,m,d] = iso.split("-"); 
+      return `${d}/${m}/${y}`; 
+    }
+    function daysSince(iso){
+      const dt = parseDateISO(iso); if(!dt) return null;
+      const now = new Date(); now.setHours(0,0,0,0); dt.setHours(0,0,0,0);
+      return Math.floor((now - dt) / 86400000);
+    }
+    function typeLabel(t){
+      const map = { moment:"Khoảnh khắc", anniv:"Kỷ niệm", trip:"Chuyến đi", gift:"Món quà", other:"Khác" };
+      return map[t] || "Khác";
+    }
+    function getEmoji(t){
+      const map = { moment:"✨", anniv:"🎉", trip:"🧳", gift:"🎁", other:"📝" };
+      return map[t] || "📝";
+    }
+
+    // Xử lý ảnh (Resize trước khi upload để tiết kiệm dung lượng Firebase)
+    $photo.addEventListener("change", async (e)=>{
+      const file = e.target.files[0];
+      if(!file){ selectedPhotoDataUrl = null; return; }
+      // Giảm kích thước xuống 800px để nhẹ database
+      selectedPhotoDataUrl = await fileToDataUrlResized(file, 800, 0.7);
+    });
+
+    function fileToDataUrlResized(file, maxW, qual){
+      return new Promise((res)=>{
+        const r = new FileReader();
+        r.onload=()=>{
+          const img=new Image();
+          img.onload=()=>{
+            const sc = Math.min(1, maxW/img.width);
+            const cvs=document.createElement("canvas");
+            cvs.width=img.width*sc; cvs.height=img.height*sc;
+            cvs.getContext("2d").drawImage(img,0,0,cvs.width,cvs.height);
+            res(cvs.toDataURL("image/jpeg", qual));
+          };
+          img.src=r.result;
+        };
+        r.readAsDataURL(file);
+      });
+    }
+
+    // --- 5. RENDER GIAO DIỆN ---
+    function renderHeader(){
+      $countAll.textContent = items.length;
+      if(settings.startLove){
+        const d = daysSince(settings.startLove);
+        // Logic hiển thị ngày
+        $loveDays.textContent = d >= 0 ? `${d} ngày` : `Còn ${Math.abs(d)} ngày`;
+      } else $loveDays.textContent = "—";
+      
+      if(settings.coupleName) document.title = settings.coupleName + " 💖";
+      const sub = el("headerSub");
+      if(settings.coupleName && sub) sub.textContent = settings.coupleName;
+    }
+
+    function render(){
+      // Không cần gọi renderHeader ở đây nữa vì onValue settings đã lo rồi
+      $list.innerHTML = "";
+      
+      let arr = items.slice().sort((a,b)=> (b.date||"").localeCompare(a.date||""));
+      
+      const q = $q.value.toLowerCase();
+      const ft = $filterType.value;
+      if(ft!=="all") arr = arr.filter(x=>x.type===ft);
+      if(q) arr = arr.filter(x=> (x.title+x.desc+x.place).toLowerCase().includes(q));
+
+      if(arr.length === 0){
+        $list.innerHTML = `<div class="empty"><div class="empty-icon">🍃</div>Chưa có gì ở đây cả...</div>`;
+        return;
+      }
+
+      arr.forEach(it => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+          <div class="thumb">
+             ${it.photo ? `<img src="${it.photo}">` : getEmoji(it.type)}
+          </div>
+          <div class="meta">
+            <div class="titleLine">
+              <div class="item-title">${safeStr(it.title)}</div>
+              <span class="tag ${it.type||'other'}">${typeLabel(it.type)}</span>
+            </div>
+            <div class="item-date">📅 ${formatDate(it.date)} ${it.place ? `• 📍 ${it.place}` : ''}</div>
+            ${it.desc ? `<div class="item-desc">${safeStr(it.desc)}</div>` : ''}
+          </div>
+        `;
+        div.onclick = () => openDetails(it.id);
+        $list.appendChild(div);
+      });
+    }
+
+    // --- 6. CÁC NÚT BẤM (Dùng hàm saveToCloud thay vì saveItems) ---
+    function clearForm(){
+      selectedId = null; selectedPhotoDataUrl = null;
+      $title.value=""; $date.value=""; $desc.value=""; $place.value=""; $photo.value="";
+      $type.value="moment"; 
+      $btnSave.textContent = "💖 Lưu lại ngay";
+      $editHint.textContent = "";
+      $btnDelete.style.display = "none";
+    }
+
+    $btnSave.onclick = () => {
+      const title = $title.value.trim();
+      const date = $date.value;
+      if(!title || !date) return alert("Vui lòng nhập tên và ngày nhé!");
+
+      const obj = {
+        title, date, type: $type.value, desc: $desc.value.trim(), place: $place.value.trim(),
+        updatedAt: Date.now()
+      };
+
+      if(selectedId){
+        const idx = items.findIndex(x=>x.id===selectedId);
+        if(idx>=0) items[idx] = { ...items[idx], ...obj, photo: selectedPhotoDataUrl || items[idx].photo };
+      } else {
+        items.push({ id: uid(), ...obj, photo: selectedPhotoDataUrl, createdAt: Date.now() });
+      }
+      
+      // LƯU LÊN MẠNG
+      saveItemsToCloud();
+      
+      clearForm();
+      if(window.innerWidth < 600) $list.scrollIntoView({behavior:"smooth"});
+    };
+
+    $btnClear.onclick = clearForm;
+
+    // --- Detail Dialog ---
+    function openDetails(id){
+      const it = items.find(x=>x.id===id);
+      if(!it) return;
+      el("dlgTitle").textContent = it.title;
+      el("dlgType").textContent = typeLabel(it.type);
+      el("dlgType").className = `tag ${it.type}`;
+      el("dlgDate").textContent = formatDate(it.date);
+      
+      const d = daysSince(it.date);
+      el("dlgSince").textContent = d >= 0 ? `${d} ngày trước` : `Còn ${Math.abs(d)} ngày nữa`;
+      
+      el("dlgPlace").textContent = it.place || "—";
+      el("dlgDesc").textContent = it.desc || "(Không có mô tả)";
+      
+      const imgBox = el("dlgImg");
+      imgBox.innerHTML = it.photo ? `<img src="${it.photo}">` : `<div class="emoji">${getEmoji(it.type)}</div>`;
+
+      btnEdit.onclick = () => { loadToForm(id); dlg.close(); };
+      
+      btnDeleteDlg.onclick = () => {
+        if(confirm("Xoá kỷ niệm này thật sao? 😢")) {
+          items = items.filter(x=>x.id!==id);
+          saveItemsToCloud(); // Xoá xong lưu lại lên mây
+          dlg.close();
+        }
+      };
+
+      dlg.showModal();
+    }
+    
+    btnClose.onclick = () => dlg.close();
+
+    function loadToForm(id){
+      const it = items.find(x=>x.id===id);
+      if(!it) return;
+      selectedId = it.id;
+      $title.value = it.title; $date.value = it.date; $type.value = it.type;
+      $desc.value = it.desc || ""; $place.value = it.place || "";
+      selectedPhotoDataUrl = null; 
+      $btnSave.textContent = "💾 Cập nhật thay đổi";
+      $editHint.textContent = "Đang sửa: " + it.title;
+      $title.focus();
+    }
+
+    // --- Settings ---
+    btnSettings.onclick = () => {
+      $coupleName.value = settings.coupleName || "";
+      $startLove.value = settings.startLove || "";
+      dlgSettings.showModal();
+    }
+    btnCloseSettings.onclick = () => dlgSettings.close();
+    
+    btnSaveSettings.onclick = () => {
+      settings.coupleName = $coupleName.value;
+      settings.startLove = $startLove.value;
+      saveSettingsToCloud(); // Lưu cài đặt lên mây
+      dlgSettings.close();
+    }
+
+    // Reset nút này giờ sẽ xoá sạch dữ liệu trên mây (Cẩn thận)
+    btnReset.onclick = () => {
+      if(confirm("NGUY HIỂM: Hành động này sẽ xoá sạch dữ liệu của CẢ HAI NGƯỜI. Bạn chắc chưa?")) {
+        items = []; 
+        settings = {};
+        set(ref(db, 'memories'), null); // Xoá sạch trên DB
+        render();
+        dlgSettings.close();
+      }
+    }
+
+    // Filter events
+    $q.oninput = render; $filterType.onchange = render;
+
+    // Init logic
+    if(!$date.value) $date.value = new Date().toISOString().slice(0,10);
+    // Không cần gọi render() ở đây vì khi kết nối Firebase thành công, 
+    // hàm onValue sẽ tự động chạy và gọi render()
+    // --- Xử lý Nhạc ---
+const btnMusic = document.getElementById("btnMusic");
+const myAudio = document.getElementById("myAudio");
+
+btnMusic.addEventListener("click", () => {
+  if (myAudio.paused) {
+    myAudio.play();
+    btnMusic.classList.add("playing"); // Thêm hiệu ứng xoay
+    btnMusic.innerHTML = "🎼"; // Đổi icon
+  } else {
+    myAudio.pause();
+    btnMusic.classList.remove("playing"); // Tắt xoay
+    btnMusic.innerHTML = "🎵"; // Trả lại icon cũ
+  }
+});
+  </script>
+</body>
+</html>
